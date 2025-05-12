@@ -15,20 +15,33 @@
       <ul>
         <li><a href="role-selection.html">Home</a></li>
         <li><a href="#" id="bookings-link">Bookings</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="#" id="admin-link">Admin</a></li>
+        <li><a href="calendar.html">Schedule & Events</a></li>
       </ul>
     </nav>
   </header>
   <main>
-    <section class="calendar">
-      <h2>CALENDAR</h2>
-      <!-- Placeholder for calendar content -->
-    </section>
+    <div class="main-grid">
+      <section class="calendar">
+        <h2>CALENDAR</h2>
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FManila&showPrint=0&showCalendars=0&showTitle=0&showTz=0&src=NmYyMjc4ZmY0OGMzNTYxNzQ1ODYyN2ExYzU2M2NhZTg5NmEzYWU4MjFjMjc3MTZiODc2NjA5NTQyMDE5MGIzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%234285F4" style="border:solid 1px #777" width="900" height="600" frameborder="0" scrolling="no"></iframe>
+      </section>
+      <section class="room-status">
+        <h2>Room Status</h2>
+        <ul>
+          <li>Room 101: <span class="status available">Available</span></li>
+          <li>CL2: <span class="status booked">Booked</span></li>
+          <li>PL2: <span class="status available">Available</span></li>
+          <li>CL3: <span class="status booked">Booked</span></li>
+        </ul>
+        <h3>Announcements</h3>
+        <p>Upcoming Maintenance: May 15, 2025</p>
+        <p>New Booking Policy: Submit requests 48 hours in advance.</p>
+      </section>
+    </div>
   </main>
   <footer>
     <p>FOOTNOTE</p>
   </footer>
   <script src="script.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93da717f8a8e7bba',t:'MTc0Njg5MDY2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
