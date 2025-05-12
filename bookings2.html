@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BooCAS - Admin Bookings</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -17,11 +15,12 @@
       <ul>
         <li><a href="role-selection.html">Home</a></li>
         <li><a href="bookings2.html" id="bookings-link">Bookings</a></li>
+        <li><a href="calendar.html">Schedule & Events</a></li> 
       </ul>
     </nav>
   </header>
   <main>
-    <div class="main-grid">
+    <div class="admin-grid">
       <section class="dashboard-stats">
         <div class="stat">
           <img src="confirmed.png" alt="Confirmed">
@@ -78,10 +77,6 @@
           </div>
         </div>
       </section>
-      <section class="calendar">
-        <h2>Calendar</h2>
-        <div id="calendar"></div>
-      </section>
       <section class="booking-history">
         <h2>Booking History</h2>
         <div class="booking-item">
@@ -97,8 +92,6 @@
   <footer>
     <p>FOOTNOTE</p>
   </footer>
-  <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js"></script>
   <script src="script.js"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93da717d3f72bcea',t:'MTc0Njg5MDY2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
