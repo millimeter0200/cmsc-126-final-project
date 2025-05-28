@@ -1,22 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
 }
 
 header {
-  background-color: #8B0000;
+  background-color: #7B1113; /* UP Maroon */
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 32px;
+  font-family: 'Segoe UI', sans-serif;
+  border-bottom: 3px solid #FFCD00; /* UP Gold accent */
 }
 
 .logo-icon {
-  width: 10%;
-  height: 10%;
-  margin-right: 10px;
+  height: 50px;
+  width: auto;
 }
 
 nav ul {
@@ -31,13 +41,24 @@ nav ul li {
 }
 
 nav ul li a {
+  font-family: 'Poppins', sans-serif;
   color: white;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.2s ease-in-out;
+}
+
+nav ul li a:hover {
+  color: #FFCD00;
 }
 
 .login-signup {
   display: flex;
-  height: calc(100vh - 100px);
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px); /* adjusted for header & footer */
+  padding: 2rem;
 }
 
 .login-panel {
@@ -58,12 +79,12 @@ nav ul li a {
 }
 
 .signup-panel {
-  width: 50%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 400px;
+  max-width: 450px;
+  width: 100%;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .signup-panel h2 {
@@ -73,9 +94,11 @@ nav ul li a {
 }
 
 .signup-panel form label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
   display: block;
-  margin-bottom: 5px;
-  margin-left: 180px;
+  margin-bottom: 4px;
 }
 
 .signup-panel form input {
@@ -84,38 +107,42 @@ nav ul li a {
   margin-bottom: 20px;
   margin-left: 180px;
   padding: 5px;
-  border-radius: 5px; /* Add corner radius to input boxes */
+  border-radius: 5px;
   display: block;
 }
 
 #email {
-  opacity: 0.7; /* Keep email input at 70% opacity */
+  opacity: 0.7;
 }
 
 #password {
-  opacity: 1.0; /* Explicitly set password input to fully opaque */
+  opacity: 1.0;
 }
 
 .signup-panel form button {
-  width: 42%;
+  width: 100%;
+  max-width: 150px;
   padding: 10px;
-  margin-bottom: 10px;
   background-color: #8B0000;
   border-radius: 5px;
   color: white;
   border: none;
   cursor: pointer;
-  display: block;
-  margin-left: 180px;
-  font-size: 15px;
+  font-size: 13px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
-.signup-panel form p { /* already have an account */
+.signup-panel form p {
+  font-size: 12px;
+  margin-left: 0;
+  margin-right: 0;
   text-align: center;
-  margin-top: 20px;
-  margin-right: 80px;
-  font-size: 15px;
-  opacity: 0.7;
+  width: 100%;
 }
 
 .signup-panel .google {
@@ -134,25 +161,22 @@ nav ul li a {
 }
 
 .welcome-text {
-  font-size: 40px;
+  font-size: 100px;
   font-weight: bold;
   color: #00563f;
-  margin-left: 500px;
 }
 
 .welcome-logo {
-  height: 5%; /* Adjust based on your image size */
-  width: 30%;
+  height: 10%;
+  width: 50%;
   vertical-align: middle;
 }
 
 .subheader {
   font-size: 18px;
-  color: #666;
-  padding-bottom: 50px;
-  margin-top: -130px;
-  margin-left: 510px;
-  letter-spacing: 6.5px;
+  color: black;
+  margin-top: -110px;
+  letter-spacing: 6px;
 }
 
 /* Styles for role selection page */
@@ -169,10 +193,22 @@ nav ul li a {
 }
 
 .role-buttons {
+  display: none !important;
+}
+
+.role-buttons button {
+  display: none !important;
+}
+
+.role-icon {
+  display: none !important;
+}
+
+.role-buttons {
   display: flex;
   gap: 20px;
-  justify-content: center; /* Center the buttons horizontally */
-  flex-wrap: nowrap; /* Prevent wrapping to new line */
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .role-buttons button {
@@ -196,7 +232,7 @@ nav ul li a {
 
 .role-icon {
   width: 50%;
-  margin-bottom: 8px; /* Space between icon and text below */
+  margin-bottom: 8px;
 }
 
 .room-name {
@@ -206,36 +242,50 @@ nav ul li a {
   margin-bottom: -10px;
 }
 
-.rooms, .bookings, .reserve, .admin-dashboard, .booking-history {
+.rooms, .admin-dashboard, .booking-history {
   width: 100%;
   padding: 20px;
 }
 
-.room-card, .booking-item { /*room name */
+.room-card, .booking-item {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  display: flex; /* Use flexbox to align items horizontally */
-  align-items: center; /* Vertically center the text and button */
-  justify-content: space-between; /* Space out the text block and button */
-  text-align: left; /* Override center alignment for text */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
   width: 100%;
 }
 
-.booking-details {
+.booking-item {
   display: flex;
-  flex-direction: column; /* Stack room name and date/time vertically */
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.booking-details {
+  flex: 1;
+  margin-right: 16px;
 }
 
 .booking-details p {
-  line-height: 10px; 
-  margin: 5px 0; 
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-word;
 }
 
 .booking-actions {
   display: flex;
-  gap: 10px; /* Space between Approve and Decline buttons */
+  gap: 10px;
 }
 
 .room-card button, .booking-item button, .booking-requests button {
@@ -265,7 +315,7 @@ nav ul li a {
 }
 
 .reserve form input, .reserve form select, .reserve form textarea {
-  width: 103%; /* Adjusted to 100% of the form container for consistency */
+  width: 103%;
   margin-bottom: 10px;
   padding: 5px;
   border-radius: 5px;
@@ -279,7 +329,7 @@ nav ul li a {
   cursor: pointer;
   border-radius: 5px;
   display: block;
-  width: 30%; /* Adjusted for a smaller button width relative to the form */
+  width: 30%;
   margin-top: 10px;
 }
 
@@ -289,34 +339,72 @@ nav ul li a {
 
 .reserve form #notes {
   width: 100.5%;
-  height: 30px; /* Increased height for better usability */
+  height: 30px;
 }
 
 .main-grid {
   display: grid;
   grid-template-areas:
     "calendar room-status";
-  grid-template-columns: 2fr 1fr; /* Calendar takes 2/3, Room Status takes 1/3 */
-  grid-template-rows: auto; /* Single row to fit content */
+  grid-template-columns: 2.5fr 0.8fr;
   gap: 20px;
-  margin-top: 20px;
-  padding: 0 20px;
+  margin: 0 auto;
   max-width: 1200px;
+  align-items: start;
 }
 
-.bookings-grid {
-  display: grid;
-  grid-template-areas:
-    "bookings booking-history"
-    "reserve booking-history";
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  grid-template-rows: auto auto; /* Two rows, heights based on content */
-  gap: 20px;
+.bookings {
+  grid-area: bookings;
+}
+
+.booking-history {
+  grid-area: booking-history;
+}
+
+.reserve {
+  grid-area: reserve;
+  background-color: #fdfdfd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.reserve h2 {
   margin-top: 20px;
-  padding: 0 20px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  color: #7B1113;
+}
+
+.reserve label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  display: block;
+}
+
+.reserve input,
+.reserve select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.reserve button {
+  background-color: #7B1113;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.reserve button:hover {
+  background-color: #a10e10;
 }
 
 .admin-grid {
@@ -324,8 +412,8 @@ nav ul li a {
   grid-template-areas:
     "dashboard-stats booking-history"
     "booking-requests booking-history";
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  grid-template-rows: auto auto; /* Two rows for stats and requests */
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 20px;
   margin-top: 20px;
   padding: 0 20px;
@@ -336,7 +424,7 @@ nav ul li a {
 
 .calendar {
   grid-area: calendar;
-  width: 100%; /* Ensure it fills the grid area */
+  width: 100%;
   margin-left: 30px;
   margin-bottom: 20px;
   text-align: left;
@@ -345,12 +433,13 @@ nav ul li a {
 .room-status {
   grid-area: room-status;
   padding: 30px;
-  background-color: #f5f5f5; /* Light background for contrast */
+  background-color: #f5f5f5;
   border-radius: 5px;
   margin-top: 65px;
   margin-bottom: 20px;
   margin-left: 30px;
   width: 100%;
+  max-width: 10px;
 }
 
 .room-status h2, .room-status h3 {
@@ -372,11 +461,11 @@ nav ul li a {
 }
 
 .status.available {
-  color: #228B22; /* Green for available */
+  color: #228B22;
 }
 
 .status.booked {
-  color: #FFA500; /* Orange for booked */
+  color: #FFA500;
 }
 
 .room-status p {
@@ -386,16 +475,29 @@ nav ul li a {
 
 .bookings {
   grid-area: bookings;
-  margin-left: -140px; /* Adjust this value to shift My Bookings to the right */
+  margin-left: 0; /* FIXED */
 }
 
 .reserve {
   grid-area: reserve;
-  margin-left: -140px; /* Adjust this value to shift Reserve a Room to the right */
+  margin-left: 0; /* FIXED */
+}
+
+.reserve form input,
+.reserve form select,
+.reserve form textarea,
+.reserve form #dateReserve,
+.reserve form #notes {
+  width: 100%;
 }
 
 .booking-history {
   grid-area: booking-history;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.05);
+  height: fit-content;
 }
 
 .bookings h2, .reserve h2, .booking-history h2 {
@@ -408,11 +510,12 @@ nav ul li a {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #f5f5f5; /* Light background for contrast */
+  background-color: #f5f5f5;
   padding: 20px;
   border-radius: 5px;
-  width: 110%;
-  margin-left: -130px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .stat {
@@ -420,33 +523,33 @@ nav ul li a {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  flex: 5; /* Ensure equal spacing */
+  flex: 5;
 }
 
 .stat img {
-  width: 30%; /* Adjusted size for better proportion */
+  width: 30%;
   height: 30%;
-  margin-bottom: 10px; /* Space between icon and text */
+  margin-bottom: 10px;
 }
 
 .stat h3 {
   font-size: 17px;
   margin: 0 0 5px 0;
-  color: #333; /* Darker text for readability */
+  color: #333;
 }
 
 .stat p {
-  font-size: 40px; /* Reduced from 50px for better balance */
+  font-size: 40px;
   font-weight: bold;
   margin: 0;
-  color: #000000; /* Match theme color */
+  color: #000000;
 }
 
 .booking-requests {
   grid-area: booking-requests;
-  margin-left: -130px;
-  margin-bottom: 20px;
-  width: 113%;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  max-width: 1200px;
 }
 
 .booking-requests table {
@@ -467,4 +570,1038 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
+}
+
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.welcome-text {
+  font-size: 40px;
+  font-weight: bold;
+  color: #00563f;
+  margin: 0;
+}
+
+.welcome-logo {
+  height: auto;
+  width: 250px;
+  vertical-align: middle;
+}
+
+.upv-footer {
+  background-color: #7B1113; /* UP Maroon */
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 1.5rem 2rem;
+  font-size: 0.9rem;
+  border-top: 3px solid #FFCD00; /* UP Gold accent border */
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.footer-column.left {
+  background-color: #7B1113; /* UP Maroon */
+  text-align: center;
+}
+
+.footer-column.center {
+  background-color: #006241; /* UP Green */
+  text-align: center;
+  line-height: 1.4;
+}
+
+.footer-column.right {
+  background-color: #FFCD00; /* UP Gold */
+  color: black;
+}
+
+.footer-logo {
+  height: 80px;
+  width: auto;
+  margin: 0.3rem;
+}
+
+.footer-column h3,
+.footer-column h4 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.footer-column hr {
+  border: 0.5px solid white;
+  margin: 0.3rem auto;
+  width: 60%;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.footer-column ul li {
+  margin: 0.25rem 0;
+}
+
+.footer-column ul li a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-icons {
+  margin-top: 0.5rem;
+}
+
+.footer-icons a {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #cccccc;
+}
+
+.footer-row {
+  max-width: 1200px;
+  margin: 0 auto; /* centers the content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-contact,
+.footer-contact p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-contact {
+  text-align: right;
+}
+
+.footer-contact a {
+  color: #FFCD00;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact strong {
+  color: #FFCD00;
+}
+
+.footer-copyright {
+  text-align: right;
+}
+
+.signup-panel h2,
+.signup-panel form label,
+.signup-panel form input,
+.google {
+  margin-left: 0px !important;
+  width: 100% !important;
+  text-align: left;
+}
+
+.signup-panel form p {
+  margin-left: 5px;
+  text-align: center;
+}
+.signup-panel form button {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  background-color: #8B0000;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-bottom: 40px;
+}
+
+.admin-dashboard {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  color: #7B1113;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.dashboard-stats {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: #f8f8f8;
+  flex: 1;
+  min-width: 250px;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.stat-card img {
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.stat-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7B1113;
+}
+
+.admin-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.booking-requests,
+.booking-history {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.booking-requests h2,
+.booking-history h2 {
+  margin-bottom: 1rem;
+  color: #7B1113;
+}
+
+.booking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.booking-details {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.booking-details p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-word;
+}
+
+.booking-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.booking-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+button.confirmed {
+  background-color: #228B22;
+}
+
+button.pending {
+  background-color: #FFA500;
+}
+
+/* Booking Card Buttons */
+.booking-item button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: default;
+  transition: 0.3s ease;
+}
+
+button.approved {
+  background-color: #007e33;
+  color: white;
+}
+
+button.pending {
+  background-color: #f39c12;
+  color: white;
+}
+
+button.approved:hover,
+button.pending:hover {
+  opacity: 0.85;
+}
+
+.button-radio-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center; /* Center horizontally */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.role-button {
+  padding: 10px 24px;
+  border: 2px solid #7B1113;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  color: #7B1113;
+  transition: all 0.2s ease;
+  display: flex;              /* Use flex for centering */
+  align-items: center;        /* Center vertically */
+  justify-content: center;    /* Center horizontally */
+  user-select: none;
+  text-align: center;         /* Center text inside */
+  width: 100%;                /* Optional: makes all buttons same width */
+  min-width: 100px;           /* Optional: minimum width for consistency */
+}
+
+input[type="radio"][name="role"]:checked + .role-button {
+  background-color: #7B1113;
+  color: white;
+}
+
+.button-radio-group input[type="radio"] {
+  display: none; /* completely hides the circle */
+}
+
+.button-radio-group label {
+  display: inline-block;
+  padding: 6px 14px;
+  margin: 4px 8px 12px 0;
+  border: 2px solid #014421;
+  border-radius: 20px;
+  background-color: #fff8d1;
+  color: #664d03;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button-radio-group input[type="radio"]:checked + label {
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #014421;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input[type="password"],
+.input-wrapper input[type="email"] {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input-wrapper input:focus {
+  border-color: #006cfa;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  color: #555;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #f9f9f9;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  align-items: flex-start; /* Add this line to align all children to the left */
+}
+
+/* Force the parent to align left */
+.reserve form {
+  display: block !important;
+  text-align: left !important;
+}
+
+/* Checkbox group: align all children left */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  text-align: left !important;
+  width: 100%;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Each checkbox and label: align left, no extra width */
+.checkbox-group label,
+.equipment-item {
+  display: flex;
+  flex-direction: row;      /* Make sure items are in a row */
+  align-items: center;      /* Vertically center */
+  gap: 8px;                 /* Space between checkbox and text */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Optional: tighten up the space between checkbox and label */
+.checkbox-group input[type="checkbox"] {
+  margin-right: 0; /* Remove extra margin if any */
+}
+
+.equipment-section {
+  margin-bottom: 20px;
+}
+
+#toggleEquipment {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  width: 100%;              /* Full width */
+  min-height: 40px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.equipment-input {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  width: 100%;              /* Make it full width like other fields */
+  box-shadow: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.equipment-input:focus, .equipment-input.active {
+  border: 2px solid #7B1113;
+  outline: none;
+  box-shadow: 0 0 0 2px #ffcd0033;
+}
+
+.dropdown-role {
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdown-role label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown-role select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: #333;
+}
+
+.dropdown-role select option[disabled][selected] {
+  color: #888; /* Gray color for the placeholder option */
+}
+
+/* Add styles for the Get Started button on role-selection.php */
+.start-button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.get-started-btn {
+  background-color: #8B0000; /* UP Maroon */
+  color: white;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #FFCD00; /* UP Gold */
+  color: #7B1113;           /* UP Maroon text for contrast */
+}
+
+.timeslot-checkboxes label {
+  margin-left: 8px;
+  margin-right: 12px;
+}
+
+.timeslot-checkboxes div {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.timeslot-checkboxes label {
+  margin-left: 6px;
+}
+
+.dropdown-field {
+  position: relative;
+}
+
+.dropdown-field input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px; /* tighten this down */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: white;
+  padding: 4px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+/* Remove extra spacing per line */
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  margin: 2px 0; /* reduced spacing */
+}
+
+/* Align checkbox and label tighter */
+.timeslot-checkboxes input[type="checkbox"] {
+  margin-inline: 4px;
+  margin-block: 2px;
+}
+
+/* Keep font consistent with other fields */
+.timeslot-checkboxes label {
+  font-weight: normal;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.timeslot-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Remove extra vertical gap between rows */
+  padding-left: 0; /* Remove any default padding */
+  align-items: flex-start; /* Ensure all children align left */
+}
+
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Reduce space between checkbox and label */
+  justify-content: flex-start; /* Move content to the left */
+  margin: 0; /* Remove extra margin */
+  padding-left: 0; /* Move content to the left */
+  width: 100%;
+}
+
+.timeslot-checkboxes input[type="checkbox"] {
+  margin: 0 4px 0 0; /* Tighten space to the right of checkbox */
+  align-self: flex-start; /* Align checkbox to the top/left */
+}
+
+.timeslot-checkboxes label {
+  font-weight: normal;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin: 0; /* Remove extra margin */
+  padding: 0;
+  text-align: left;
+}
+
+.timeslot-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start; /* ✅ this is key */
+}
+
+.timeslot-entry {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 900px) {
+  .booking-history,
+  .reserve {
+    margin-top: 0 !important;
+  }
+}
+
+.booking-history,
+.reserve {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .admin-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-stats {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  .bookings-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "bookings"
+      "booking-history"
+      "reserve";
+  }
+
+  .bookings,
+  .reserve,
+  .booking-history {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .button-radio-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .role-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+main .bookings-grid {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-areas:
+    "reserve booking-history"; /* <-- both in the same row */
+  grid-template-columns: 2fr 1fr !important;
+  gap: 2rem !important;
+  padding: 0 2rem !important;
+}
+
+.bookings,
+.reserve,
+.booking-history {
+  width: 100%;
+  max-width: unset;
+  margin: 0;
+}
+
+.role-selection-login {
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.role-selection-login label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.radio-group label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #555;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #7B1113; /* UP Maroon */
+}
+
+.dropdown-role {
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdown-role label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown-role select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: #333;
+}
+
+.dropdown-role select option[disabled][selected] {
+  color: #888; /* Gray color for the placeholder option */
+}
+
+/* Add styles for the Get Started button on role-selection.php */
+.start-button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.get-started-btn {
+  background-color: #8B0000; /* UP Maroon */
+  color: white;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #FFCD00; /* UP Gold */
+  color: #7B1113;           /* UP Maroon text for contrast */
+}
+
+.timeslot-checkboxes label {
+  margin-left: 8px;
+  margin-right: 12px;
+}
+
+.timeslot-checkboxes div {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.timeslot-checkboxes label {
+  margin-left: 6px;
+}
+
+.dropdown-field {
+  position: relative;
+}
+
+.dropdown-field input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px; /* tighten this down */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: white;
+  padding: 4px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+/* Remove extra spacing per line */
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  margin: 2px 0; /* reduced spacing */
+}
+
+/* Align checkbox and label tighter */
+.timeslot-checkboxes input[type="checkbox"] {
+  margin-inline: 4px;
+  margin-block: 2px;
+}
+
+/* Keep font consistent with other fields */
+.timeslot-checkboxes label {
+  font-weight: normal;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.timeslot-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Remove extra vertical gap between rows */
+  padding-left: 0; /* Remove any default padding */
+  align-items: flex-start; /* Ensure all children align left */
+}
+
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Reduce space between checkbox and label */
+  justify-content: flex-start; /* Move content to the left */
+  margin: 0; /* Remove extra margin */
+  padding-left: 0; /* Move content to the left */
+  width: 100%;
+}
+
+.timeslot-checkboxes input[type="checkbox"] {
+  margin: 0 4px 0 0; /* Tighten space to the right of checkbox */
+  align-self: flex-start; /* Align checkbox to the top/left */
+}
+
+.timeslot-checkboxes label {
+  font-weight: normal;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin: 0; /* Remove extra margin */
+  padding: 0;
+  text-align: left;
+}
+
+.timeslot-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeslot-checkboxes div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start; /* ✅ this is key */
+}
+
+.timeslot-entry {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 900px) {
+  .booking-history,
+  .reserve {
+    margin-top: 0 !important;
+  }
+}
+
+.booking-history,
+.reserve {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .admin-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-stats {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  .bookings-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "bookings"
+      "booking-history"
+      "reserve";
+  }
+
+  .bookings,
+  .reserve,
+  .booking-history {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .button-radio-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .role-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* FullCalendar event styling */
+.fc-event {
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+/* Status-based event colors */
+.fc-event[data-status="pending"] {
+  background-color: #f0ad4e; /* orange */
+}
+
+.fc-event[data-status="approved"] {
+  background-color: #5cb85c; /* green */
+}
+
+.fc-event[data-status="rejected"] {
+  background-color: #d9534f; /* red */
 }
