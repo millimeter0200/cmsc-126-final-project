@@ -7,43 +7,49 @@ $error = '';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $email = $_POST['email'] ?? '';
   $password = $_POST['password'] ?? '';
-  $role = $_POST['role'] ?? '';
 
-  if ($role === 'student') {
-    $query = "SELECT studentID, password FROM student WHERE email = ?";
-  } elseif ($role === 'admin') {
-    $query = "SELECT adminID, password FROM admin WHERE email = ?";
-  } else {
-    $error = "Invalid role selected.";
-  }
+  // Check student table first
+  $query = "SELECT studentID, password, name FROM student WHERE email = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $stmt->store_result();
 
-  if (empty($error)) {
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+  if ($stmt->num_rows === 1) {
+    $stmt->bind_result($userID, $hashedPassword, $studentName);
+    $stmt->fetch();
 
-    if ($stmt->num_rows === 1) {
-      $stmt->bind_result($userID, $hashedPassword);
-      $stmt->fetch();
-
-      if (password_verify($password, $hashedPassword)) {
-        if ($role === 'student') {
-          $_SESSION['studentID'] = $userID;
-          header("Location: bookings1.php");
-        } else {
-          $_SESSION['adminID'] = $userID;
-          header("Location: bookings2.php");
-        }
-        exit;
-      } else {
-        $error = "Incorrect password.";
-      }
-    } else {
-      $error = "No account found with that email for this role.";
+    if (password_verify($password, $hashedPassword)) {
+      unset($_SESSION['adminID']);
+      $_SESSION['studentID'] = $userID;
+      $_SESSION['studentName'] = $studentName;
+      header("Location: bookings1.php");
+      exit;
     }
-    $stmt->close();
   }
+  $stmt->close();
+
+  // If not a student, check admin table
+  $query = "SELECT adminID, password FROM admin WHERE email = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $stmt->store_result();
+
+  if ($stmt->num_rows === 1) {
+    $stmt->bind_result($adminID, $hashedPassword);
+    $stmt->fetch();
+
+    if (password_verify($password, $hashedPassword)) {
+      unset($_SESSION['studentID']);
+      $_SESSION['adminID'] = $adminID;
+      header("Location: bookings2.php");
+      exit;
+    }
+  }
+  $stmt->close();
+
+  $error = "Incorrect email or password.";
 }
 ?>
 
@@ -90,17 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               <circle cx="10" cy="10" r="2" fill="#888"/>
             </svg>
           </span>
-        </div>
-
-        <div class="role-selection-login">
-          <label>Select Role</label>
-          <div class="button-radio-group">
-            <input type="radio" name="role" id="role-student" value="student" required>
-            <label for="role-student" class="role-button">Student</label>
-
-            <input type="radio" name="role" id="role-admin" value="admin" required>
-            <label for="role-admin" class="role-button">Admin</label>
-          </div>
         </div>
 
         <button type="submit">Log In</button>

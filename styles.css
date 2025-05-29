@@ -283,11 +283,6 @@ nav ul li a:hover {
   word-break: break-word;
 }
 
-.booking-actions {
-  display: flex;
-  gap: 10px;
-}
-
 .room-card button, .booking-item button, .booking-requests button {
   padding: 5px 10px;
   cursor: pointer;
@@ -865,7 +860,10 @@ footer {
 .booking-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
 }
 
 .booking-actions button {
@@ -1599,9 +1597,401 @@ main .bookings-grid {
 }
 
 .fc-event[data-status="approved"] {
-  background-color: #5cb85c; /* green */
+  background-color: #006241; /* green */
 }
 
 .fc-event[data-status="rejected"] {
-  background-color: #d9534f; /* red */
+  background-color: #7B1113; /* red */
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+.modal[style*="display: flex"] {
+  display: flex !important;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 10vh auto;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Make rejected buttons red with white text */
+button.rejected,
+.booking-item button.rejected,
+button[class*="rejected"] {
+  background-color: #7B1113 !important;
+  color: #fff !important;
+}
+
+/* If you use a status span for rejected */
+.status.rejected {
+  background-color: #7B1113 !important;
+  color: #fff !important;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+/* Neutral decline button (pending state) */
+.decline-btn {
+  background-color: #7B1113;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  width: 100px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+/* Maroon decline button ONLY when rejected */
+.decline-btn.rejected {
+  background-color: #7B1113 !important;
+  color: #fff !important;
+}
+.booking-requests {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+.booking-item {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 18px 24px;
+  min-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.booking-details {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.booking-details p {
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: break-word;
+  margin-bottom: 6px;
+}
+.modal-content {
+  max-width: 500px;
+  width: 90vw;
+}
+/* Booking item animation */
+.booking-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.25s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-item:hover {
+  background-color: #fff2b3;
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+/* Button hover effect */
+.booking-actions button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.booking-actions button:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  align-items: left;
+  justify-content: left;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.close-modal {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.booking-item:hover {
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+button:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 75% 25%; /* Calendar 75%, Room Status 25% */
+  gap: 20px;
+  align-items: start;
+  margin: 20px auto;
+  max-width: 1200px;
+  padding: 0;
+  height: 100%; /* Allow children to grow vertically */
+}
+
+.room-status {
+  grid-column: 2;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  height: 100%; /* Fill vertical space of grid */
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  margin-right: 0; /* Remove any right margin */
+  margin-left: 0;
+  max-width: none;
+  align-self: flex-start;
+}
+
+.calendar {
+  grid-column: 1;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 0; /* Ensure no left margin */
+}
+
+@media (max-width: 768px) {
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .room-status, .calendar {
+    grid-column: 1;
+  }
+}
+
+/* Make FullCalendar event text green */
+.fc-event, .fc-event-title, .fc-event-main {
+  color: #228B22 !important; /* or any green shade you prefer */
+}
+
+.fc-event {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Animate FullCalendar event on hover */
+.fc-event, .fc-event-main {
+  transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
+}
+
+.fc-event:hover, .fc-event-main:hover {
+  transform: scale(1.07);
+  box-shadow: 0 4px 16px rgba(34,139,34,0.18);
+  z-index: 2;
+}
+
+/* Make FullCalendar events show pointer cursor on hover */
+.fc-event, .fc-event-main {
+  cursor: pointer !important;
+}
+
+.room-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto; /* Allow to grow and shrink */
+  max-height: none; /* Remove fixed max-height */
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.room-status-card {
+  background-color: #f3f3f3;
+  border-left: 4px solid #28a745;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.room-status-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: default;
+}
+
+.room-status-card p {
+  margin: 4px 0;
+}
+
+.hidden-booking {
+  transition: all 0.3s;
+}
+
+.status-btn.approved {
+  background: #219653;
+  color: #fff;
+  border: none;
+  padding: 6px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.status-btn.rejected {
+  background: #b71c1c;
+  color: #fff;
+  border: none;
+  padding: 6px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.status-dropdown button {
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+}
+.status-dropdown button:hover {
+  background: #f0f0f0;
+}
+#toggleHistoryBtn {
+  background-color: #ffcd00;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 18px auto 0;
+  display: block;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+#toggleHistoryBtn:hover {
+  background-color: #ffcd00;
+  color: #a10e10;
+  transform: scale(1.04);
+}
+
+.booking-item {
+  display: block;
+  padding: 18px 24px;
+  min-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background-color: #fff;
+  transition: all 0.25s;
+  text-align: left;
+}
+
+.booking-details {
+  width: 100%;
+  text-align: left;
+}
+
+.status-btn-center {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.status-btn {
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.decline-reason,
+.booking-details .decline-reason,
+.booking-details p.decline-reason {
+  text-align: center;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 0;
+  display: block;
+}
+
+#modalDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px; /* vertical and horizontal gap */
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+#modalDetails p {
+  min-width: 180px;
+  margin: 0 0 8px 0;
+  flex: 1 1 40%;
+  font-size: 15px;
+}
+
+.modal-content h3 {
+  color: #7B1113;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }

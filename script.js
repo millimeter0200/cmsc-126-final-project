@@ -47,42 +47,23 @@ function submitReservation() {
     return;
   }
 
+  const form = document.getElementById('reserveForm');
+  const formData = new FormData(form);
+
   fetch("reserve_handler.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      roomType,
-      roomNumber,
-      startDateTime,
-      endDateTime,
-      subjectActivity,
-      purpose,
-      divisionOffice
-    })
+    body: formData
   })
-    .then(async response => {
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        return response.json();
-      } else {
-        const text = await response.text();
-        throw new Error("Server returned non-JSON response:\n" + text);
-      }
-    })
-    .then(result => {
-      if (result.success) {
-        alert("Reservation successful!");
-        location.reload();
-      } else {
-        alert("Reservation failed: " + result.message);
-      }
-    })
-    .catch(error => {
-      console.error("Fetch error:", error);
-      alert("Request failed: " + error.message);
-    });
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Reservation submitted successfully!');
+      form.reset();
+      location.reload(); // Automatically reload the page after successful submission
+    } else {
+      alert(data.message || 'Reservation failed.');
+    }
+  });
 }
 
 // Placeholder for viewing booking request details
@@ -185,30 +166,33 @@ function initializeCalendar() {
   const calendarEl = document.getElementById('calendar');
   if (!calendarEl) return;
 
-  const events = [];
-  const bookingItems = document.querySelectorAll('.booking-item');
-
-  bookingItems.forEach(item => {
-    const roomName = item.querySelector('.room-name')?.textContent;
-    const dateTime = item.querySelector('.booking-details p:nth-child(2)')?.textContent;
-    if (!roomName || !dateTime) return;
-
-    const [datePart, startTime, , endTime] = dateTime.split(' ');
-    const { start, end } = parseDateTime(datePart, `${startTime} - ${endTime}`);
-    const status = item.querySelector('button')?.textContent || 'UNKNOWN';
-
-    let color = '#4285F4';
-    if (status === 'PENDING') color = '#FFA500';
-    if (status === 'APPROVED') color = '#228B22';
-
-    events.push({ title: roomName, start, end, color, extendedProps: { status } });
-  });
-
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: events,
+    events: 'fetch_events.php', // Fetch events from server as JSON
+    eventContent: function(arg) {
+      // Show room (title) and student name (extendedProps.student)
+      const room = document.createElement('div');
+      room.textContent = arg.event.title;
+
+      const student = document.createElement('div');
+      student.style.fontSize = '0.85em';
+      student.style.color = '#228B22';
+      student.textContent = arg.event.extendedProps.student
+        ? arg.event.extendedProps.student
+        : '';
+
+      return { domNodes: [room, student] };
+    },
     eventClick(info) {
-      alert(`Booking: ${info.event.title}\nTime: ${info.event.start.toLocaleString()} - ${info.event.end.toLocaleString()}\nStatus: ${info.event.extendedProps.status}`);
+      const props = info.event.extendedProps;
+      alert(
+        `Room: ${info.event.title}\n` +
+        `Student: ${props.student || ''}\n` +
+        `Time: ${info.event.start.toLocaleString()} - ${info.event.end.toLocaleString()}\n` +
+        `Subject: ${props.subject || ''}\n` +
+        `Division: ${props.division || ''}\n` +
+        `Purpose: ${props.purpose || ''}`
+      );
     }
   });
 
@@ -216,11 +200,32 @@ function initializeCalendar() {
 }
 
 // Approval actions for admin
-function approveBooking(id) {
-  alert(`Booking ${id} approved`);
+function approveBooking(reservationID) {
+  updateBookingStatus(reservationID, 'Approved');
 }
-function declineBooking(id) {
-  alert(`Booking ${id} declined`);
+
+function declineBooking(reservationID) {
+  updateBookingStatus(reservationID, 'Rejected');
+}
+
+function updateBookingStatus(reservationID, status) {
+  fetch('update_status.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ reservationID, status })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Status updated!');
+        location.reload();
+      } else {
+        alert('Failed to update status: ' + (data.message || 'Unknown error'));
+      }
+    })
+    .catch(err => {
+      alert('Error: ' + err);
+    });
 }
 
 // Run on page load
@@ -268,17 +273,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   flatpickr("#startDateTime", {
     enableTime: true,
-    dateFormat: "Y-m-d h:i K",
-    minTime: "07:00",
-    maxTime: "21:00",
-    time_24hr: false
+    dateFormat: "Y-m-d H:i",
+    minDate: "today"
   });
 
   flatpickr("#endDateTime", {
     enableTime: true,
-    dateFormat: "Y-m-d h:i K",
-    minTime: "07:00",
-    time_24hr: false
+    dateFormat: "Y-m-d H:i",
+    minDate: "today"
   });
 });
 
@@ -455,3 +457,199 @@ document.addEventListener('DOMContentLoaded', function() {
 
   checkboxes.forEach(cb => cb.addEventListener('change', updateSelectedText));
 });
+// Hide dropdown when clicking outside
+document.addEventListener('click', function (e) {
+  const isDropdown = e.target.closest('.dropdown-field');
+  if (!isDropdown) {
+    const list = document.getElementById("timeSlots");
+    if (list) list.style.display = "none";
+  }
+});
+
+// Display selected values in the input field
+document.addEventListener("change", function () {
+  const selected = Array.from(document.querySelectorAll('input[name="timeSlots[]"]:checked'))
+    .map(cb => cb.value);
+  const display = document.getElementById("timeSlotDisplay");
+  if (display) display.value = selected.join(", ");
+});
+
+function togglePassword() {
+  const pwd = document.getElementById('password');
+  if (pwd.type === 'password') {
+    pwd.type = 'text';
+  } else {
+    pwd.type = 'password';
+  }
+}
+
+function togglePasswordVisibility() {
+  const passwordInput = document.getElementById("password");
+  const eyeIcon = document.getElementById("eye-icon");
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    // Eye closed (line through)
+    eyeIcon.innerHTML = `
+      <ellipse cx="10" cy="10" rx="8" ry="5" fill="none" stroke="#888" stroke-width="2"/>
+      <circle cx="10" cy="10" r="2" fill="#888"/>
+      <line x1="4" y1="16" x2="16" y2="4" stroke="#888" stroke-width="2"/>
+    `;
+  } else {
+    passwordInput.type = "password";
+    // Eye open
+    eyeIcon.innerHTML = `
+      <ellipse cx="10" cy="10" rx="8" ry="5" fill="none" stroke="#888" stroke-width="2"/>
+      <circle cx="10" cy="10" r="2" fill="#888"/>
+    `;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('toggleEquipment');
+  const options = document.getElementById('equipmentOptions');
+  const selectedText = document.getElementById('equipmentSelectedText');
+  const checkboxes = options.querySelectorAll('input[type="checkbox"]');
+
+  function updateSelectedText() {
+    const selected = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.parentElement.textContent.trim());
+    selectedText.textContent = selected.length ? selected.join(', ') : 'Select equipment...';
+    selectedText.style.color = selected.length ? '#333' : '#888';
+  }
+
+  toggle.addEventListener('click', function(e) {
+    options.classList.toggle('hidden');
+    toggle.classList.toggle('active');
+  });
+
+  toggle.addEventListener('blur', function() {
+    setTimeout(() => {
+      options.classList.add('hidden');
+      toggle.classList.remove('active');
+    }, 150);
+  });
+
+  checkboxes.forEach(cb => cb.addEventListener('change', updateSelectedText));
+});
+
+function showDetailsModal(cardOrData) {
+  let data;
+  // If it's a DOM element, build the object from data attributes
+  if (cardOrData instanceof HTMLElement) {
+    data = {
+      name: cardOrData.dataset.student || '',
+      room_name: cardOrData.dataset.room || '',
+      date_reserved: cardOrData.dataset.date || '',
+      timeslot: cardOrData.dataset.time || '',
+      subject_activity: cardOrData.dataset.subject || '',
+      division_office: cardOrData.dataset.division || '',
+      purpose: cardOrData.dataset.purpose || '',
+      status: cardOrData.dataset.status || ''
+    };
+  } else {
+    data = cardOrData;
+  }
+
+  const modal = document.getElementById("detailsModal");
+  const details = document.getElementById("modalDetails");
+
+  details.innerHTML = `
+    <p><strong>Name:</strong> ${data.name}</p>
+    <p><strong>Room:</strong> ${data.room_name}</p>
+    <p><strong>Date:</strong> ${data.date_reserved}</p>
+    <p><strong>Timeslot:</strong> ${data.timeslot}</p>
+    <p><strong>Subject/Activity:</strong> ${data.subject_activity}</p>
+    <p><strong>Division Office:</strong> ${data.division_office}</p>
+    <p><strong>Purpose:</strong> ${data.purpose}</p>
+    <p><strong>Status:</strong> ${data.status}</p>
+  `;
+
+  modal.style.display = "flex";
+}
+
+function showReservationDetails(card) {
+  const modal = document.getElementById('detailsModal');
+  const details = document.getElementById('modalDetails');
+  details.innerHTML = `
+    <p><strong>Room:</strong> ${card.dataset.room}</p>
+    <p><strong>Date:</strong> ${card.dataset.date}</p>
+    <p><strong>Time:</strong> ${card.dataset.time}</p>
+    <p><strong>Subject/Activity:</strong> ${card.dataset.subject}</p>
+    <p><strong>Division/Office:</strong> ${card.dataset.division}</p>
+    <p><strong>Purpose:</strong> ${card.dataset.purpose}</p>
+    <p><strong>Status:</strong> ${card.dataset.status}</p>
+  `;
+  modal.style.display = 'block';
+}
+
+function closeDetailsModal() {
+  document.getElementById('detailsModal').style.display = 'none';
+}
+
+// Make functions available globally for inline HTML onclick
+window.showReservationDetails = showReservationDetails;
+window.closeDetailsModal = closeDetailsModal;
+
+function showModal(data) {
+  const modal = document.getElementById("reservationModal");
+  const details = document.getElementById("modalDetails");
+  details.innerHTML = `
+    <h3>Reservation Details</h3>
+    <p><strong>Name:</strong> ${data.full_name}</p>
+    <p><strong>Email:</strong> ${data.email}</p>
+    <p><strong>Subject/Activity:</strong> ${data.subject_activity}</p>
+    <p><strong>Room:</strong> ${data.room}</p>
+    <p><strong>Date:</strong> ${data.date}</p>
+    <p><strong>Time:</strong> ${data.start_time} – ${data.end_time}</p>
+    <p><strong>Status:</strong> ${data.status}</p>
+    <p><strong>Equipment:</strong> ${data.equipment || 'None'}</p>
+    <p><strong>Notes:</strong> ${data.notes || 'None'}</p>
+  `;
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("reservationModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById("reservationModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+function sortBookingHistory() {
+  const select = document.getElementById('sortHistory');
+  const value = select.value;
+  const [type, order] = value.split('-');
+  const cards = Array.from(document.querySelectorAll('.booking-history .booking-item'));
+
+  let filtered = cards;
+  if (type === 'approved' || type === 'pending' || type === 'declined') {
+    filtered = cards.filter(card => card.dataset.status === type);
+  }
+
+  filtered.sort((a, b) => {
+    const dateA = new Date(a.dataset.date);
+    const dateB = new Date(b.dataset.date);
+    if (order === 'asc') return dateA - dateB;
+    else return dateB - dateA;
+  });
+
+  // Hide all cards first
+  cards.forEach(card => card.style.display = 'none');
+  // Show sorted and filtered cards (limit to 5 unless toggled)
+  const showAll = document.getElementById('toggleHistoryBtn') && document.getElementById('toggleHistoryBtn').textContent === 'Show Less';
+  filtered.forEach((card, i) => {
+    if (showAll || i < 5) card.style.display = 'block';
+  });
+
+  // Show/hide the toggle button as needed
+  if (filtered.length > 5) {
+    document.getElementById('toggleHistoryBtn').style.display = 'block';
+  } else if (document.getElementById('toggleHistoryBtn')) {
+    document.getElementById('toggleHistoryBtn').style.display = 'none';
+  }
+}
