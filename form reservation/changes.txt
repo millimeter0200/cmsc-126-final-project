@@ -1,0 +1,31 @@
+changes:
+
+bookings1:
+
+rename
+<section class="booking-history">
+<h2>My Bookings</h2>
+
+added
+ <label for="roomTypeReserve">Room Type</label>
+          <select id="roomTypeReserve" onchange="filterRooms()" required>
+            <option value="none" disabled selected hidden>-- Select Room Type --</option>
+
+
+
+script.js:
+
+
+add + edit in filterRooms()
+  roomNumber.innerHTML = '<option value="" selected disabled hidden>-- Select Room --</option>';
+
+  if (!roomType) {
+    roomNumberContainer.classList.add("hidden");
+    return;
+  }
+
+
+css:
+.hidden {
+  display: none;
+}
